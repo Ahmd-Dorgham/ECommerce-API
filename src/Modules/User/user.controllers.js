@@ -1,4 +1,4 @@
-import { hashSync } from "bcrypt";
+import { compareSync, hashSync } from "bcrypt";
 import { Address, User } from "../../../DB/Models/index.js";
 import { ErrorClass } from "../../Utils/error-class.utils.js";
 import jwt from "jsonwebtoken";
@@ -78,4 +78,25 @@ export const verifyEmail = async (req, res, next) => {
     message: "Email confirmed successfully",
     user: updatedUser,
   });
+};
+
+export const logIn = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new ErrorClass("user not found", 404));
+  }
+  if (!user.isEmailVerified) {
+    return next(new ErrorClass("Please verify your account before logging in", 400));
+  }
+  const isMatched = compareSync(password, user.password);
+  if (!isMatched) {
+    return next(new ErrorClass("Invalid credentials", 400));
+  }
+  const defaultAddress = await Address.findOne({ userId: user._id, isDefault: true });
+
+  const token = jwt.sign({ userId: user._id, role: user.userType }, process.env.LOGIN_SECRET_KEY);
+
+  res.status(200).json({ message: "Signed in Successfully", token, address: defaultAddress || null });
 };

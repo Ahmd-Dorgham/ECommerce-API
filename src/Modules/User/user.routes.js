@@ -8,4 +8,5 @@ userRouter.post("/signup", errorHandler(controllers.signUp));
 
 userRouter.get("/verify/:token", errorHandler(controllers.verifyEmail));
 
+userRouter.post("/signin", errorHandler(controllers.logIn));
 export { userRouter };
