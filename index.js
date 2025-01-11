@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import db_connection from "./DB/connection.js";
 import { userRouter } from "./src/Modules/User/user.routes.js";
 import { globalError } from "./src/Middlewares/error-handling.middleware.js";
+import { addressRouter } from "./src/Modules/Address/address.routes.js";
 
 config();
 
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/users", userRouter);
+app.use("/addresses", addressRouter);
 
 db_connection();
 
