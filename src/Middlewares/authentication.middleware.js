@@ -1,5 +1,5 @@
 import { User } from "../../DB/Models/index.js";
-import { ErrorClass } from "../Utils/error-class.utils";
+import { ErrorClass } from "../Utils/error-class.utils.js";
 import jwt from "jsonwebtoken";
 
 export const authentication = async (req, res, next) => {
