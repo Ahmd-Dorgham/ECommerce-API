@@ -4,6 +4,7 @@ import db_connection from "./DB/connection.js";
 import { userRouter } from "./src/Modules/User/user.routes.js";
 import { globalError } from "./src/Middlewares/error-handling.middleware.js";
 import { addressRouter } from "./src/Modules/Address/address.routes.js";
+import { categoryRouter } from "./src/Modules/Category/category.routes.js";
 
 config();
 
@@ -13,6 +14,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/addresses", addressRouter);
+app.use("/categories", categoryRouter);
 
 db_connection();
 
