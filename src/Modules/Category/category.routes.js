@@ -16,4 +16,12 @@ categoryRouter.post(
 
 categoryRouter.get("/", errorHandler(controllers.getCategory));
 
+categoryRouter.put(
+  "/update/:_id",
+  multerHost({ allowedExtensions: extensions.Images }).single("image"),
+  errorHandler(controllers.updateCategory)
+);
+
+categoryRouter.delete("/delete/:_id", errorHandler(controllers.deleteCategory));
+
 export { categoryRouter };

@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import { ErrorClass } from "../../Utils/error-class.utils.js";
-import { uploadFile } from "../../Utils/cloudinary.utils.js";
+import { cloudinaryConfig, uploadFile } from "../../Utils/cloudinary.utils.js";
 import { nanoid } from "nanoid";
 import { Category } from "../../../DB/Models/category.model.js";
 
@@ -53,4 +53,57 @@ export const getCategory = async (req, res, next) => {
   }
 
   res.status(200).json({ message: "Category found successfully", data: category });
+};
+
+export const updateCategory = async (req, res, next) => {
+  const { _id } = req.params;
+  const category = await Category.findById(_id);
+
+  if (!category) {
+    return next(new ErrorClass("Category not found", 404));
+  }
+
+  const { name } = req.body;
+  if (name) {
+    const slug = slugify(name, {
+      replacement: "_",
+      lower: true,
+    });
+    category.name = name;
+    category.slug = slug;
+  }
+
+  if (req.file) {
+    const splittedPublicId = category.Images.public_id.split(`/${category.customId}/`)[1];
+    const { secure_url } = await uploadFile({
+      file: req.file.path,
+      folder: `${process.env.UPLOADS_FOLDER}/Categories/${category.customId}`,
+      publicId: splittedPublicId,
+    });
+    category.secure_url = secure_url;
+  }
+  await category.save();
+
+  res.status(200).json({
+    message: "Category updated Successfully",
+    data: category,
+  });
+};
+
+export const deleteCategory = async (req, res, next) => {
+  const { _id } = req.params;
+  const category = await Category.findByIdAndDelete(_id);
+  if (!category) {
+    return next(new ErrorClass("category not found", 404));
+  }
+  const categoryPath = `${process.env.UPLOADS_FOLDER}/Categories/${category?.customId}`;
+
+  //
+  await cloudinaryConfig().api.delete_resources_by_prefix(categoryPath);
+  await cloudinaryConfig().api.delete_folder(categoryPath);
+  //
+  res.status(200).json({
+    status: "success",
+    message: "category deleted successfully",
+  });
 };
