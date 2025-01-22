@@ -3,6 +3,7 @@ import { ErrorClass } from "../../Utils/error-class.utils.js";
 import { cloudinaryConfig, uploadFile } from "../../Utils/cloudinary.utils.js";
 import { nanoid } from "nanoid";
 import { Category } from "../../../DB/Models/category.model.js";
+import { ApiFeatures } from "../../Utils/api-features.utils.js";
 
 export const createCategory = async (req, res, next) => {
   const { name } = req.body;
@@ -105,5 +106,18 @@ export const deleteCategory = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "category deleted successfully",
+  });
+};
+
+export const listCategories = async (req, res, next) => {
+  const mongooseQuery = Category.find();
+
+  const ApiFeaturesInstance = new ApiFeatures(mongooseQuery, req.query).pagination().filters();
+
+  const list = await ApiFeaturesInstance.mongooseQuery;
+
+  res.status(200).json({
+    message: "Categories found successfully",
+    data: list,
   });
 };
