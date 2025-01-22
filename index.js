@@ -7,6 +7,7 @@ import { addressRouter } from "./src/Modules/Address/address.routes.js";
 import { categoryRouter } from "./src/Modules/Category/category.routes.js";
 import { subCategoryRouter } from "./src/Modules/Sub-Category/sub-category.routes.js";
 import { brandRouter } from "./src/Modules/Brand/brand.routes.js";
+import { productRouter } from "./src/Modules/Product/product.routes.js";
 
 config();
 
@@ -19,6 +20,7 @@ app.use("/addresses", addressRouter);
 app.use("/categories", categoryRouter);
 app.use("/sub-categories", subCategoryRouter);
 app.use("/brands", brandRouter);
+app.use("/products", productRouter);
 
 db_connection();
 
