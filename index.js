@@ -8,6 +8,7 @@ import { categoryRouter } from "./src/Modules/Category/category.routes.js";
 import { subCategoryRouter } from "./src/Modules/Sub-Category/sub-category.routes.js";
 import { brandRouter } from "./src/Modules/Brand/brand.routes.js";
 import { productRouter } from "./src/Modules/Product/product.routes.js";
+import { cartRouter } from "./src/Modules/Cart/cart.routes.js";
 
 config();
 
@@ -21,6 +22,7 @@ app.use("/categories", categoryRouter);
 app.use("/sub-categories", subCategoryRouter);
 app.use("/brands", brandRouter);
 app.use("/products", productRouter);
+app.use("/carts", cartRouter);
 
 db_connection();
 
