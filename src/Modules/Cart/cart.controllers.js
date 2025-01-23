@@ -8,10 +8,13 @@ export const addToCart = async (req, res, next) => {
   const { productId } = req.params;
 
   const product = await checkProductStock(productId, quantity);
+
   if (!product) {
     return next(new ErrorClass("Product not available", 400));
   }
+
   const cart = await Cart.findOne({ userId });
+
   if (!cart) {
     const newCart = new Cart({
       userId,
@@ -21,10 +24,13 @@ export const addToCart = async (req, res, next) => {
     await newCart.save();
     res.status(201).json({ message: "Product added Successfully", cart: newCart });
   }
+
   const isProductExist = cart.products.find((p) => p.productId == productId);
+
   if (isProductExist) {
     return next(new ErrorClass("Product already in Cart", 400));
   }
+
   cart.products.push({ productId: product._id, quantity, price: product.appliedPrice });
 
   await cart.save();
@@ -71,7 +77,6 @@ export const updateCart = async (req, res, next) => {
 
 export const getCart = async (req, res, next) => {
   const userId = req.authUser._id;
-
   const cart = await Cart.findOne({ userId });
 
   res.status(200).json({ status: "success", data: cart });

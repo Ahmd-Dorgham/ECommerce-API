@@ -9,6 +9,7 @@ import { subCategoryRouter } from "./src/Modules/Sub-Category/sub-category.route
 import { brandRouter } from "./src/Modules/Brand/brand.routes.js";
 import { productRouter } from "./src/Modules/Product/product.routes.js";
 import { cartRouter } from "./src/Modules/Cart/cart.routes.js";
+import { couponRouter } from "./src/Modules/Coupon/coupon.routes.js";
 
 config();
 
@@ -23,6 +24,7 @@ app.use("/sub-categories", subCategoryRouter);
 app.use("/brands", brandRouter);
 app.use("/products", productRouter);
 app.use("/carts", cartRouter);
+app.use("/coupons", couponRouter);
 
 db_connection();
 
