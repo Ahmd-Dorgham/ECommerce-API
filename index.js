@@ -11,6 +11,7 @@ import { productRouter } from "./src/Modules/Product/product.routes.js";
 import { cartRouter } from "./src/Modules/Cart/cart.routes.js";
 import { couponRouter } from "./src/Modules/Coupon/coupon.routes.js";
 import { disableCouponsCron } from "./src/Utils/crons.utils.js";
+import { orderRouter } from "./src/Modules/Order/order.routes.js";
 
 config();
 
@@ -26,6 +27,7 @@ app.use("/brands", brandRouter);
 app.use("/products", productRouter);
 app.use("/carts", cartRouter);
 app.use("/coupons", couponRouter);
+app.use("/orders", orderRouter);
 
 db_connection();
 
