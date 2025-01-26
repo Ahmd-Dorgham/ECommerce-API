@@ -10,6 +10,7 @@ import { brandRouter } from "./src/Modules/Brand/brand.routes.js";
 import { productRouter } from "./src/Modules/Product/product.routes.js";
 import { cartRouter } from "./src/Modules/Cart/cart.routes.js";
 import { couponRouter } from "./src/Modules/Coupon/coupon.routes.js";
+import { disableCouponsCron } from "./src/Utils/crons.utils.js";
 
 config();
 
@@ -29,6 +30,9 @@ app.use("/coupons", couponRouter);
 db_connection();
 
 app.use(globalError);
+
+// disableCouponsCron();
+// gracefulShutdown();
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
