@@ -27,7 +27,6 @@ export const multerMiddleware = ({ filePath = "general", allowedExtensions = ext
   });
 
   const fileFilter = (req, file, cb) => {
-    console.log(file);
     if (allowedExtensions.includes(file.mimetype)) {
       return cb(null, true);
     }

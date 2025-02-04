@@ -25,7 +25,6 @@ export const validateCoupon = async (couponCode, userId) => {
     (u) =>
       u.userId.toString() !== userId.toString() || (u.userId.toString() === userId.toString() && u.maxCount <= u.usageCount)
   );
-  console.log({ isUserNotEligible });
   if (isUserNotEligible) {
     return {
       message: "User is not eligible to use this coupon or you redeem all your tries",
@@ -41,9 +40,9 @@ export const applyCoupon = (subTotal, coupon) => {
   const { couponAmount: discountAmount, couponType: discountType } = coupon;
 
   if (discountAmount && discountType) {
-    if (discountType === DiscountType.Percentage) {
+    if (discountType === DiscountType.PERCENTAGE) {
       total = subTotal - (subTotal * discountAmount) / 100;
-    } else if (discountType === DiscountType.Amount) {
+    } else if (discountType === DiscountType.FIXED) {
       if (discountAmount > subTotal) {
         return total; // Ensures total doesn't go negative
       }

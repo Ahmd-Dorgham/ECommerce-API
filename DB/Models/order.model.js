@@ -36,7 +36,6 @@ const orderSchema = new Schema(
     addressId: {
       type: Schema.Types.ObjectId,
       ref: "Address",
-      required: true,
     },
     contactNumber: {
       type: String,
@@ -89,3 +88,5 @@ const orderSchema = new Schema(
   },
   { timestamps: true }
 );
+
+export const Order = mongoose.models.Order || model("Order", orderSchema);
