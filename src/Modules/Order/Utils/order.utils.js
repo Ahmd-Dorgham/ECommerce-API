@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { Coupon } from "../../../../DB/Models/index.js";
+import { DiscountType } from "../../../Utils/enums-utils.js";
 
 /**
  * @param {*} couponCode
@@ -33,4 +34,21 @@ export const validateCoupon = async (couponCode, userId) => {
   }
 
   return { error: false, coupon };
+};
+
+export const applyCoupon = (subTotal, coupon) => {
+  let total = subTotal;
+  const { couponAmount: discountAmount, couponType: discountType } = coupon;
+
+  if (discountAmount && discountType) {
+    if (discountType === DiscountType.Percentage) {
+      total = subTotal - (subTotal * discountAmount) / 100;
+    } else if (discountType === DiscountType.Amount) {
+      if (discountAmount > subTotal) {
+        return total; // Ensures total doesn't go negative
+      }
+      total = subTotal - discountAmount;
+    }
+  }
+  return total;
 };

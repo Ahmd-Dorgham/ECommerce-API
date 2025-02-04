@@ -5,6 +5,7 @@ import { validateCoupon } from "./Utils/order.utils.js";
 
 export const createOrder = async (req, res, next) => {
   const userId = req.authUser._id;
+
   const { address, addressId, contactNumber, couponCode, shippingFee, VAT, paymentMethod } = req.body;
 
   const cart = await Cart.findOne({ userId }).populate("products.productId");
@@ -25,7 +26,6 @@ export const createOrder = async (req, res, next) => {
 
   if (couponCode) {
     const isCouponValid = await validateCoupon(couponCode, userId);
-    console.log({ isCouponValid });
     if (isCouponValid.error) {
       return next(new ErrorClass(isCouponValid.message, 400, isCouponValid.message));
     }
