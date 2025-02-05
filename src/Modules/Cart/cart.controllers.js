@@ -22,10 +22,10 @@ export const addToCart = async (req, res, next) => {
       // subTotal,
     });
     await newCart.save();
-    res.status(201).json({ message: "Product added Successfully", cart: newCart });
+    return res.status(201).json({ message: "Product added Successfully", cart: newCart });
   }
 
-  const isProductExist = cart.products.find((p) => p.productId == productId);
+  const isProductExist = cart?.products.find((p) => p.productId == productId);
 
   if (isProductExist) {
     return next(new ErrorClass("Product already in Cart", 400));

@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { OrderStatus, PaymentMethods } from "../../src/Utils/enums-utils.js";
+import { Product } from "./product.model.js";
+import { Coupon } from "./coupon.model.js";
 
 const { model, Schema } = mongoose;
 
@@ -88,5 +90,19 @@ const orderSchema = new Schema(
   },
   { timestamps: true }
 );
+
+orderSchema.post("save", async function () {
+  // Decrement stock of products
+  for (const product of this.products) {
+    await Product.updateOne({ _id: product.productId }, { $inc: { stock: -product.quantity } });
+  }
+
+  // Increment usage count of coupon
+  if (this.couponId) {
+    const coupon = await Coupon.findById(this.couponId);
+    coupon.Users.find((u) => u.userId.toString() === this.userId.toString()).usageCount++;
+    await coupon.save();
+  }
+});
 
 export const Order = mongoose.models.Order || model("Order", orderSchema);

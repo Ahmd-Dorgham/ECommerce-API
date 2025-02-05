@@ -35,9 +35,7 @@ export const createOrder = async (req, res, next) => {
     }
     coupon = isCouponValid.coupon;
 
-    console.log(`total before ${total}`);
     total = applyCoupon(subTotal, coupon) + shippingFee + VAT;
-    console.log(`total after ${total}`);
   }
 
   if (!address && !addressId) {
@@ -75,8 +73,8 @@ export const createOrder = async (req, res, next) => {
   await orderObj.save();
 
   //clear the cart
-  //decrement the stock of the product
-  //increment the usage count of coupon
+  cart.products = [];
+  await cart.save();
 
   res.status(201).json({
     message: "Order created Successfully",
