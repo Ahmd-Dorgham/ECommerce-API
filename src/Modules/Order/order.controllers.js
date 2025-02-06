@@ -122,3 +122,27 @@ export const cancelOrder = async (req, res, next) => {
     cancelledOrder: order,
   });
 };
+
+export const deliverOrder = async (req, res, next) => {
+  const userId = req.authUser._id;
+  const { orderId } = req.params;
+
+  const order = await Order.findOne({
+    _id: orderId,
+    userId,
+    orderStatus: { $in: [OrderStatus.Confirmed, OrderStatus.Placed] },
+  });
+  if (!order) {
+    return next(new ErrorClass("Order not found", 404));
+  }
+
+  order.orderStatus = OrderStatus.Delivered;
+  order.deliveredAt = DateTime.now();
+
+  await order.save();
+
+  res.status(200).json({
+    message: "Order delivered",
+    order,
+  });
+};
