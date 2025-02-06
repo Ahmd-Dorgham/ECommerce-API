@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { Address, Cart, Order } from "../../../DB/Models/index.js";
+import { Address, Cart, Order, Product } from "../../../DB/Models/index.js";
 import { OrderStatus, PaymentMethods } from "../../Utils/enums-utils.js";
 import { ErrorClass } from "../../Utils/error-class.utils.js";
 import { calculateCartTotal } from "../Cart/Utils/cart.utils.js";
@@ -79,5 +79,46 @@ export const createOrder = async (req, res, next) => {
   res.status(201).json({
     message: "Order created Successfully",
     order: orderObj,
+  });
+};
+
+export const cancelOrder = async (req, res, next) => {
+  const { orderId } = req.params;
+  const userId = req.authUser;
+  //get order data
+  const order = await Order.findOne({
+    _id: orderId,
+    userId,
+    orderStatus: { $in: [OrderStatus.Confirmed, OrderStatus.Placed, OrderStatus.Pending] },
+  });
+  if (!order) {
+    return next(new ErrorClass("Order not found", 404));
+  }
+  //check if order bought before 3 days
+  const orderDate = DateTime.fromJSDate(order.createdAt);
+  const currentDate = DateTime.now();
+  const diff = Math.ceil(Number(currentDate.diff(orderDate, "days").toObject().days).toFixed(2));
+
+  console.log(diff);
+  console.log(currentDate.diff(orderDate, "days").toObject());
+
+  if (diff > 3) {
+    return next(new ErrorClass("Can not cancel order after 3 days", 400));
+  }
+  //update order status to cancelled
+
+  order.orderStatus = OrderStatus.Cancelled;
+  order.cancelledAt = DateTime.now();
+  order.cancelledBy = userId;
+
+  await order.save();
+  //update order model
+  for (const product of order.products) {
+    await Product.updateOne({ _id: product.productId }, { $inc: { stock: product.quantity } });
+  }
+
+  res.status(200).json({
+    message: "Order cancelled Successfully",
+    cancelledOrder: order,
   });
 };

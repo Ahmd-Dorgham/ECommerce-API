@@ -6,5 +6,6 @@ import * as controllers from "./order.controllers.js";
 const orderRouter = Router();
 
 orderRouter.post("/create", authentication, errorHandler(controllers.createOrder));
+orderRouter.put("/cancel/:orderId", authentication, errorHandler(controllers.cancelOrder));
 
 export { orderRouter };
