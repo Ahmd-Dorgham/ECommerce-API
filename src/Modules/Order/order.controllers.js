@@ -4,6 +4,7 @@ import { OrderStatus, PaymentMethods } from "../../Utils/enums-utils.js";
 import { ErrorClass } from "../../Utils/error-class.utils.js";
 import { calculateCartTotal } from "../Cart/Utils/cart.utils.js";
 import { applyCoupon, validateCoupon } from "./Utils/order.utils.js";
+import { ApiFeatures } from "../../Utils/api-features.utils.js";
 
 export const createOrder = async (req, res, next) => {
   const userId = req.authUser._id;
@@ -144,5 +145,22 @@ export const deliverOrder = async (req, res, next) => {
   res.status(200).json({
     message: "Order delivered",
     order,
+  });
+};
+
+export const listOrders = async (req, res, next) => {
+  const mongooseQuery = Order.find();
+  const userId = req.authUser._id;
+
+  const query = { userId, ...req.query };
+
+  const ApiFeaturesInstance = new ApiFeatures(mongooseQuery, query).pagination().sort().filters();
+
+  const orders = await ApiFeaturesInstance.mongooseQuery;
+
+  res.status(200).json({
+    status: "Success",
+    message: "orders Fetched Successfully",
+    orders,
   });
 };
