@@ -100,8 +100,12 @@ orderSchema.post("save", async function () {
   // Increment usage count of coupon
   if (this.couponId) {
     const coupon = await Coupon.findById(this.couponId);
-    coupon.Users.find((u) => u.userId.toString() === this.userId.toString()).usageCount++;
-    await coupon.save();
+    const userCoupon = coupon.Users.find((u) => u.userId.toString() === this.userId.toString());
+
+    if (userCoupon) {
+      userCoupon.usageCount++;
+      await coupon.save();
+    }
   }
 });
 

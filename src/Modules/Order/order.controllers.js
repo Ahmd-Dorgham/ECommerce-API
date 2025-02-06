@@ -85,7 +85,7 @@ export const createOrder = async (req, res, next) => {
 
 export const cancelOrder = async (req, res, next) => {
   const { orderId } = req.params;
-  const userId = req.authUser;
+  const userId = req.authUser._id;
   //get order data
   const order = await Order.findOne({
     _id: orderId,
