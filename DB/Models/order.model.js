@@ -91,13 +91,16 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
-orderSchema.post("save", async function () {
-  // Decrement stock of products
-  for (const product of this.products) {
-    await Product.updateOne({ _id: product.productId }, { $inc: { stock: -product.quantity } });
+orderSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    for (const product of this.products) {
+      await Product.updateOne({ _id: product.productId }, { $inc: { stock: -product.quantity } });
+    }
   }
+  next();
+});
 
-  // Increment usage count of coupon
+orderSchema.post("save", async function () {
   if (this.couponId) {
     const coupon = await Coupon.findById(this.couponId);
     const userCoupon = coupon.Users.find((u) => u.userId.toString() === this.userId.toString());
