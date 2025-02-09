@@ -1,9 +1,6 @@
-import { ErrorClass } from "../../Utils/error-class.utils.js";
-import { uploadFile } from "../../Utils/cloudinary.utils.js";
 import { nanoid } from "nanoid";
 import { Product } from "../../../DB/Models/product.model.js";
-import { calculateProductPrice } from "../../Utils/calculate-price.utils.js";
-import { ApiFeatures } from "../../Utils/api-features.utils.js";
+import { ApiFeatures, uploadFile, ErrorClass, calculateProductPrice } from "../../Utils/index.js";
 
 export const addProduct = async (req, res, next) => {
   const { title, overview, specs, price, discountAmount, discountType, stock } = req.body;

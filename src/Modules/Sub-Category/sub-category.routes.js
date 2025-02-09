@@ -1,10 +1,7 @@
 import { Router } from "express";
-import { authentication } from "../../Middlewares/authentication.middleware.js";
-import { errorHandler } from "../../Middlewares/error-handling.middleware.js";
 import * as controllers from "./sub-category.controllers.js";
-import { extensions } from "../../Utils/file-extensions.utils.js";
-import { multerHost } from "../../Middlewares/multer.middleware.js";
-import { getDocumentByName } from "../../Middlewares/finders.middleware.js";
+import { extensions } from "../../Utils/index.js";
+import { getDocumentByName, multerHost, errorHandler, authentication } from "../../Middlewares/index.js";
 import { SubCategory } from "../../../DB/Models/sub-category.model.js";
 
 const subCategoryRouter = Router();

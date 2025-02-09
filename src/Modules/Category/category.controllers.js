@@ -1,9 +1,7 @@
 import slugify from "slugify";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
-import { cloudinaryConfig, uploadFile } from "../../Utils/cloudinary.utils.js";
 import { nanoid } from "nanoid";
-import { Category } from "../../../DB/Models/category.model.js";
-import { ApiFeatures } from "../../Utils/api-features.utils.js";
+import { Category } from "../../../DB/Models/index.js";
+import { ApiFeatures, cloudinaryConfig, uploadFile, ErrorClass } from "../../Utils/index.js";
 
 export const createCategory = async (req, res, next) => {
   const { name } = req.body;

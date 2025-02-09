@@ -1,5 +1,5 @@
 import { Coupon, CouponChangeLog, User } from "../../../DB/Models/index.js";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
+import { ErrorClass } from "../../Utils/index.js";
 
 /**
  * @api {POST} /coupons/create Create coupon

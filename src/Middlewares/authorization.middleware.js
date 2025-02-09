@@ -1,4 +1,4 @@
-import { ErrorClass } from "../Utils/error-class.utils";
+import { ErrorClass } from "../Utils/error-class.utils.js";
 
 export const authorization = (allowedRoles) => {
   if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {

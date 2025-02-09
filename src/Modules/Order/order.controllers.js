@@ -1,10 +1,8 @@
 import { DateTime } from "luxon";
 import { Address, Cart, Order, Product } from "../../../DB/Models/index.js";
-import { OrderStatus, PaymentMethods } from "../../Utils/enums-utils.js";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
 import { calculateCartTotal } from "../Cart/Utils/cart.utils.js";
 import { applyCoupon, validateCoupon } from "./Utils/order.utils.js";
-import { ApiFeatures } from "../../Utils/api-features.utils.js";
+import { ApiFeatures, ErrorClass, OrderStatus, PaymentMethods } from "../../Utils/index.js";
 
 export const createOrder = async (req, res, next) => {
   const userId = req.authUser._id;

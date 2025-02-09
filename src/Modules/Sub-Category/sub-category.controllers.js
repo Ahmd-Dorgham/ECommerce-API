@@ -1,6 +1,5 @@
 import { nanoid } from "nanoid";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
-import { cloudinaryConfig, uploadFile } from "../../Utils/cloudinary.utils.js";
+import { cloudinaryConfig, uploadFile, ErrorClass } from "../../Utils/index.js";
 import { Category, SubCategory } from "../../../DB/Models/index.js";
 import slugify from "slugify";
 

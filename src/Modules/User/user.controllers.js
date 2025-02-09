@@ -1,6 +1,6 @@
 import { compareSync, hashSync } from "bcrypt";
 import { Address, User } from "../../../DB/Models/index.js";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
+import { ErrorClass } from "../../Utils/index.js";
 import jwt from "jsonwebtoken";
 import { transporter } from "../../Services/send-email.service.js";
 

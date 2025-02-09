@@ -1,17 +1,19 @@
 import express from "express";
 import { config } from "dotenv";
 import db_connection from "./DB/connection.js";
-import { userRouter } from "./src/Modules/User/user.routes.js";
+import {
+  productRouter,
+  userRouter,
+  addressRouter,
+  categoryRouter,
+  orderRouter,
+  subCategoryRouter,
+  brandRouter,
+  cartRouter,
+  couponRouter,
+} from "./src/Modules/index.js";
 import { globalError } from "./src/Middlewares/error-handling.middleware.js";
-import { addressRouter } from "./src/Modules/Address/address.routes.js";
-import { categoryRouter } from "./src/Modules/Category/category.routes.js";
-import { subCategoryRouter } from "./src/Modules/Sub-Category/sub-category.routes.js";
-import { brandRouter } from "./src/Modules/Brand/brand.routes.js";
-import { productRouter } from "./src/Modules/Product/product.routes.js";
-import { cartRouter } from "./src/Modules/Cart/cart.routes.js";
-import { couponRouter } from "./src/Modules/Coupon/coupon.routes.js";
 import { disableCouponsCron } from "./src/Utils/crons.utils.js";
-import { orderRouter } from "./src/Modules/Order/order.routes.js";
 
 config();
 

@@ -1,5 +1,5 @@
 import { Cart } from "../../../DB/Models/index.js";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
+import { ErrorClass } from "../../Utils/index.js";
 import { checkProductStock } from "./Utils/cart.utils.js";
 
 export const addToCart = async (req, res, next) => {

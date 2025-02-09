@@ -1,6 +1,5 @@
 import Joi from "joi";
-import { CouponTypes, DiscountType } from "../../Utils/enums-utils.js";
-import { generalRules } from "../../Utils/general-rules.utils.js";
+import { CouponTypes, DiscountType, generalRules } from "../../Utils/index.js";
 
 export const CreateCouponSchema = {
   body: Joi.object({

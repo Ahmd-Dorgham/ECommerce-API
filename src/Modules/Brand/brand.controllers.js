@@ -1,9 +1,7 @@
 import slugify from "slugify";
-import { SubCategory } from "../../../DB/Models/sub-category.model.js";
-import { cloudinaryConfig, uploadFile } from "../../Utils/cloudinary.utils.js";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
+import { SubCategory, Brand } from "../../../DB/Models/index.js";
+import { ErrorClass, cloudinaryConfig, uploadFile } from "../../Utils/index.js";
 import { nanoid } from "nanoid";
-import { Brand } from "../../../DB/Models/brand.model.js";
 
 export const createBrand = async (req, res, next) => {
   const { category, subCategory } = req.query;

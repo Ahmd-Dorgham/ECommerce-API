@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { errorHandler } from "../../Middlewares/error-handling.middleware.js";
+import { errorHandler } from "../../Middlewares/index.js";
 import * as controllers from "./user.controllers.js";
 
 const userRouter = Router();

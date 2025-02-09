@@ -1,11 +1,9 @@
 import { Router } from "express";
-import { extensions } from "../../Utils/file-extensions.utils.js";
-import { multerHost } from "../../Middlewares/multer.middleware.js";
-import { getDocumentByName } from "../../Middlewares/finders.middleware.js";
-import { Brand } from "../../../DB/Models/brand.model.js";
-import { errorHandler } from "../../Middlewares/error-handling.middleware.js";
+import { extensions } from "../../Utils/index.js";
+import { Brand } from "../../../DB/Models/index.js";
 import * as controllers from "./brand.controllers.js";
-import { authentication } from "../../Middlewares/authentication.middleware.js";
+
+import { multerHost, authentication, getDocumentByName, errorHandler } from "../../Middlewares/index.js";
 
 const brandRouter = Router();
 

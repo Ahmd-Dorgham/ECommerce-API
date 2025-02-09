@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ErrorClass } from "../../Utils/error-class.utils.js";
+import { ErrorClass } from "../../Utils/index.js";
 import { Address, User } from "../../../DB/Models/index.js";
 
 export const addAddress = async (req, res, next) => {

@@ -1,10 +1,7 @@
 import { Router } from "express";
-import { authentication } from "../../Middlewares/authentication.middleware.js";
-import { multerHost } from "../../Middlewares/multer.middleware.js";
-import { extensions } from "../../Utils/file-extensions.utils.js";
+import { extensions } from "../../Utils/index.js";
 import * as controllers from "./category.controllers.js";
-import { errorHandler } from "../../Middlewares/error-handling.middleware.js";
-import { getDocumentByName } from "../../Middlewares/finders.middleware.js";
+import { getDocumentByName, errorHandler, multerHost, authentication } from "../../Middlewares/index.js";
 import { Category } from "../../../DB/Models/category.model.js";
 
 const categoryRouter = Router();

@@ -1,9 +1,6 @@
 import { Router } from "express";
-import { authentication } from "../../Middlewares/authentication.middleware.js";
-import { multerHost } from "../../Middlewares/multer.middleware.js";
-import { extensions } from "../../Utils/file-extensions.utils.js";
-import { checkIfIdsExist } from "../../Middlewares/finders.middleware.js";
-import { errorHandler } from "../../Middlewares/error-handling.middleware.js";
+import { extensions } from "../../Utils/index.js";
+import { errorHandler, checkIfIdsExist, multerHost, authentication } from "../../Middlewares/index.js";
 import { Brand } from "../../../DB/Models/index.js";
 import * as controllers from "./product.controllers.js";
 
