@@ -61,3 +61,27 @@ export const listReviews = async (req, res, next) => {
     allReviews: reviews,
   });
 };
+export const approveOrRejectReview = async (req, res, next) => {
+  const { reviewId } = req.params;
+  const { accept, reject } = req.body;
+
+  if (accept && reject) {
+    return next(new ErrorClass("Please select accept or reject", 400));
+  }
+
+  const review = await Review.findByIdAndUpdate(
+    reviewId,
+    {
+      reviewStatus: accept ? ReviewStatus.Accepted : reject ? ReviewStatus.Rejected : ReviewStatus.Pending,
+    },
+    { new: true }
+  );
+
+  const statusMessage = accept
+    ? "Review approved successfully."
+    : reject
+    ? "Review rejected successfully."
+    : "Review status updated to pending.";
+
+  res.status(200).json({ message: statusMessage, review });
+};
