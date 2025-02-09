@@ -11,6 +11,7 @@ import {
   brandRouter,
   cartRouter,
   couponRouter,
+  reviewRouter,
 } from "./src/Modules/index.js";
 import { globalError } from "./src/Middlewares/error-handling.middleware.js";
 import { disableCouponsCron } from "./src/Utils/crons.utils.js";
@@ -30,6 +31,7 @@ app.use("/products", productRouter);
 app.use("/carts", cartRouter);
 app.use("/coupons", couponRouter);
 app.use("/orders", orderRouter);
+app.use("/reviews", reviewRouter);
 
 db_connection();
 
