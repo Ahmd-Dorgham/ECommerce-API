@@ -46,7 +46,7 @@ export class ApiFeatures {
   constructor(mongooseQuery, query, populateOptions = []) {
     this.mongooseQuery = mongooseQuery;
     this.query = query;
-    this.populateOptions = populateOptions; // Accepting populate options
+    this.populateOptions = populateOptions;
   }
 
   sort() {
