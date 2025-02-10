@@ -98,10 +98,12 @@ export const updateProduct = async (req, res, next) => {
 };
 
 export const listProducts = async (req, res, next) => {
-  const mongooseQuery = Product.find();
-  const ApiFeaturesInstance = new ApiFeatures(mongooseQuery, req.query).pagination().filters();
+  const populateOptions = [{ path: "Reviews", match: { reviewStatus: "accepted" } }];
 
-  const products = await ApiFeaturesInstance.mongooseQuery;
+  const mongooseQuery = Product.find();
+  const apiFeaturesInstance = new ApiFeatures(mongooseQuery, req.query, populateOptions).pagination().filters().populate();
+
+  const products = await apiFeaturesInstance.mongooseQuery;
 
   res.status(200).json({
     message: "Products List",
