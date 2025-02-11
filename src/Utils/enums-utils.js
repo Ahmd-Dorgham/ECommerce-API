@@ -11,7 +11,7 @@ export const DiscountType = {
 
 export const CouponTypes = {
   PERCENTAGE: "Percentage",
-  AMOUNT: "Amount",
+  FIXED: "Fixed",
 };
 
 export const PaymentMethods = {

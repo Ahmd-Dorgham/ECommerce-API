@@ -1,4 +1,6 @@
 import Stripe from "stripe";
+import { CouponTypes } from "../Utils/index.js";
+import { Coupon } from "../../DB/Models/index.js";
 
 export const createCheckoutSession = async ({ customer_email, metadata, discounts, lineItems }) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -25,13 +27,13 @@ export const createStripeCoupon = async ({ couponId }) => {
 
   let couponObject = {};
 
-  if (coupon.couponType === CouponType.FIXED) {
+  if (coupon.couponType === CouponTypes.FIXED) {
     couponObject = {
       name: coupon.couponCode,
       amount_off: coupon.couponAmount * 100,
       currency: "EGP",
     };
-  } else if (coupon.couponType === CouponType.PERCENTAGE) {
+  } else if (coupon.couponType === CouponTypes.PERCENTAGE) {
     couponObject = {
       name: coupon.couponCode,
       percent_off: coupon.couponAmount,
