@@ -9,4 +9,5 @@ orderRouter.put("/cancel/:orderId", authentication, errorHandler(controllers.can
 orderRouter.patch("/deliver/:orderId", authentication, errorHandler(controllers.deliverOrder));
 orderRouter.get("/list", authentication, errorHandler(controllers.listOrders));
 
+orderRouter.post("/stripePay/:orderId", authentication, errorHandler(controllers.payWithStripe));
 export { orderRouter };

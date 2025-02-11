@@ -30,6 +30,7 @@ export const OrderStatus = {
   Returned: "returned",
   Dropped: "dropped",
   OnWay: "onway",
+  Paid: "paid",
 };
 
 export const ReviewStatus = {

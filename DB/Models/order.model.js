@@ -71,6 +71,8 @@ const orderSchema = new Schema(
       type: String,
       required: true,
       enum: Object.values(PaymentMethods),
+      //orderStatus:Pending --> PayMob or stripe
+      // placed:cash
     },
     orderStatus: {
       type: String,

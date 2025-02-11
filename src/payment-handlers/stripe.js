@@ -17,15 +17,28 @@ export const createCheckoutSession = async ({ customer_email, metadata, discount
   return paymentData;
 };
 
-// lineItems: [
-//     {
-//       price_data: {
-//         currency: "usd",
-//         product_data: {
-//           name: "T-shirt",
-//         },
-//         unit_amount: 2000, //base price of the product
-//       },
-//       quantity: 1,
-//     },
-//   ],
+export const createStripeCoupon = async ({ couponId }) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  const coupon = await Coupon.findById(couponId);
+  if (!coupon) return next(new ErrorClass("coupon not found", 404));
+
+  let couponObject = {};
+
+  if (coupon.couponType === CouponType.FIXED) {
+    couponObject = {
+      name: coupon.couponCode,
+      amount_off: coupon.couponAmount * 100,
+      currency: "EGP",
+    };
+  } else if (coupon.couponType === CouponType.PERCENTAGE) {
+    couponObject = {
+      name: coupon.couponCode,
+      percent_off: coupon.couponAmount,
+    };
+  }
+
+  const stripeCoupon = await stripe.coupons.create(couponObject);
+
+  return stripeCoupon;
+};

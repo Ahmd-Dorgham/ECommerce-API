@@ -158,3 +158,66 @@ export const listOrders = async (req, res, next) => {
     orders,
   });
 };
+
+// export const payWithStripe = async (req, res, next) => {
+//   const { orderId } = req.params;
+//   const userId = req.authUser._id;
+
+//   const order = await Order.findOne({
+//     _id: orderId,
+//     userId,
+//     orderStatus: OrderStatus.Pending,
+//   }).populate([
+//     {
+//       path: "userId",
+//       select: "email _id",
+//     },
+//     {
+//       path: "products.productId",
+//       select: "title -_id",
+//     },
+//   ]);
+
+//   if (!order) {
+//     return next(new ErrorClass("Order not found or can't be paid", 404));
+//   }
+
+//   const paymentObj = {
+//     customer_email: order.userId.email,
+//     metadata: { orderId: order._id.toString() },
+//     discounts: [],
+//     line_items: order.products.map((product) => {
+//       return {
+//         price_data: {
+//           currency: "EGP",
+//           product_data: {
+//             name: product.productId.title,
+//           },
+//           unit_amount: product.price * 100,
+//         },
+//         quantity: product.quantity,
+//       };
+//     }),
+//     success_url: process.env.SUCCESS_URL,
+//     cancel_url: process.env.CANCEL_URL,
+//   };
+
+//   if (order.couponId) {
+//     const stripeCoupon = await createStripeCoupon({ couponId: order.couponId });
+//     if (stripeCoupon.status) return next(new ErrorClass(stripeCoupon.message, 400));
+
+//     paymentObj.discounts.push({ coupon: stripeCoupon.id });
+//   }
+
+//   const checkoutSession = await createCheckoutSession(paymentObj);
+//   const paymentIntent = await createPaymentIntent({
+//     amount: order.total,
+//     currency: "EGP",
+//   });
+
+//   order.payment_intent = paymentIntent.id;
+//   await order.save();
+//   console.log({ order });
+
+//   res.status(200).json({ checkoutSession, paymentIntent });
+// };
